@@ -107,7 +107,7 @@ namespace SnakeGame
                         {
                             cellColour = Brushes.Blue;
                             bonusFoodTime--;
-                            lblBonusFoodTimer.Text = bonusFoodTime.ToString() + "/nGet the bonus food!";
+                            lblBonusFoodTimer.Text = bonusFoodTime.ToString() + "\nGet the bonus food!";
                         }
                         else
                         {
@@ -206,7 +206,7 @@ namespace SnakeGame
             }
         }
 
-        private void Snake_KeyDown(object sender, KeyEventArgs e)
+        private void SnakeGame_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -232,7 +232,7 @@ namespace SnakeGame
                     break;
                 case Keys.M:
                     var m = new OptionsMenu();
-                    //m.Show();
+                    m.Show();
                     break;
             }
         }
@@ -262,5 +262,18 @@ namespace SnakeGame
         {
             Close();
         }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var m = new OptionsMenu();
+            m.Show();
+        }
+
+        private void SnakeGame_Load(object sender, EventArgs e)
+        {
+            lblGameOver.Parent = pbGameBoard;
+        }
+
+        
     }
 }
