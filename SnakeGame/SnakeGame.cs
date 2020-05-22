@@ -34,7 +34,7 @@ namespace SnakeGame
 
         int lastSegment;
         int[,] matrix;
-        int matrixSize;
+        int matSize;
         int score;
         int hiScore;
         int points = 100;
@@ -47,8 +47,8 @@ namespace SnakeGame
 
         private void NewGame()
         {
-            matrixSize = 25;
-            matrix = new int[matrixSize, matrixSize];
+            matSize = 25;
+            matrix = new int[matSize, matSize];
             matrix[15, 10] = 1;
 
             headPos = new Point(15, 10);
@@ -73,6 +73,51 @@ namespace SnakeGame
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            //MoveSnake();
+            Draw();
+        }
+
+        private void Draw()
+        {
+            Bitmap bitmap = new Bitmap(pbGameBoard.Width, pbGameBoard.Height);
+            Graphics gfx = Graphics.FromImage(bitmap);
+            SizeF cellSize = new SizeF((float)pbGameBoard.Width / matSize, (float)pbGameBoard.Height / matSize);
+
+            gfx.FillRectangle(Brushes.PaleGreen, 0, 0, pbGameBoard.Width, pbGameBoard.Height);
+
+            for (int i = 0; i < matSize; i++)
+            {
+                for (int j = 0; j < matSize; j++)
+                {
+                    if (barriers)
+                        if (i == 0 || j == 0 || i == matSize - 1 || j == matSize - 1) matrix[i, j] = 400;
+
+                    Brush cellColour = Brushes.PaleTurquoise;
+
+                    if (matrix[i, j] == 1) cellColour = Brushes.Black;
+                    else if (matrix[i, j] > 399) cellColour = Brushes.DarkSlateGray;
+                    else if (matrix[i, j] > 1) cellColour = snakeCol;
+                    else if (matrix[i, j] == food) cellColour = Brushes.Red;
+                    else if (matrix[i, j] == bonusFood)
+                    {
+                        if (bonusFoodTime > 0)
+                        {
+                            cellColour = Brushes.Blue;
+                            bonusFoodTime--;
+                            lblBonusFoodTimer.Text = bonusFoodTime.ToString() + "/nGet the bonus food!";
+                        }
+                        else
+                        {
+                            matrix[i, j] = 0;
+                            lblBonusFoodTimer.Visible = false;
+                        } 
+                    }
+                    if (matrix[i, j] < 399 && roundSnake) gfx.FillEllipse(cellColour, i * cellSize.Width - 1, j * cellSize.Height - 1, cellSize.Width - 1, cellSize.Height - 1);
+
+                    else gfx.FillRectangle(cellColour, i * cellSize.Width - 1, j * cellSize.Height - 1, cellSize.Width - 1, cellSize.Height - 1);
+                }
+                pbGameBoard.BackgroundImage = bitmap;
+            }
             
         }
 
