@@ -173,7 +173,44 @@ namespace SnakeGame
             }
         }
 
-        
+        private void GenerateFood(int foodType)
+        {
+            Point foodPos;
+
+            do { foodPos = new Point(random.Next(1, matSize - 1), random.Next(1, matSize - 1)); }
+
+            while (matrix[foodPos.X, foodPos.Y] != 0);
+
+            matrix[foodPos.X, foodPos.Y] = foodType;
+        }
+
+
+        private void EatFood()
+        {
+            lastSegment += Math.Abs(matrix[movePos.X, movePos.Y]);
+            score += points * Math.Abs(matrix[movePos.X, movePos.Y]);
+            lblScoreTotal.Text = score.ToString();
+
+            if (matrix[movePos.X, movePos.Y] == bonusFood)
+            {
+                lblBonusFoodTimer.Visible = false;
+                bonusFoodTime = 0;
+            }
+            else GenerateFood(food);
+
+            if (random.Next(0, 100) <= bonusFoodChance && bonusFoodTime == 0)
+            {
+                GenerateFood(bonusFood);
+                lblBonusFoodTimer.Visible = true;
+                bonusFoodTime = 40;
+            }
+        }
+
+        private void GameOver()
+        {
+            throw new NotImplementedException();
+        }
+
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NewGame();
