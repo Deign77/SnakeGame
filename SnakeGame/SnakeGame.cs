@@ -62,6 +62,8 @@ namespace SnakeGame
 
             bonusFoodTime = 0;
 
+            GenerateFood(food);
+
             timer = new Timer();
             timer.Interval = 500 / speed;
             timer.Tick += timer_Tick;
@@ -71,9 +73,10 @@ namespace SnakeGame
 
         }
 
+       
         private void timer_Tick(object sender, EventArgs e)
         {
-            //MoveSnake();
+            MoveSnake();
             Draw();
         }
 
@@ -121,6 +124,56 @@ namespace SnakeGame
             
         }
 
+        private void MoveSnake()
+        {
+            switch (snakeDirection)
+            {
+                case MoveDirection.Up:
+                    movePos = new Point(headPos.X, headPos.Y - 1);
+                    break;
+                case MoveDirection.Down:
+                    movePos = new Point(headPos.X, headPos.Y + 1);
+                    break;
+                case MoveDirection.Left:
+                    movePos = new Point(headPos.X - 1, headPos.Y);
+                    break;
+                case MoveDirection.Right:
+                    movePos = new Point(headPos.X + 1, headPos.Y);
+                    break;
+                default:
+                    throw new Exception("Snake must have a direction");
+            }
+
+            if (movePos.X < 0) movePos.X = matSize - 1;
+            else if (movePos.Y < 0) movePos.Y = matSize - 1;
+            else if (movePos.X == matSize) movePos.X = 0;
+            else if (movePos.Y == matSize) movePos.Y = 0;
+
+            if (matrix[movePos.X, movePos.Y] > 0) GameOver();
+
+            else
+            {
+                if (matrix[movePos.X, movePos.Y] < 0) EatFood();
+
+                //increments value of each segment of snake by 1 except lastSegment which is removed
+                for (int i = 0; i < matSize; i++)
+                {
+                    for (int j = 0; j < matSize; j++)
+                    {
+                        if (matrix[i, j] == lastSegment) matrix[i, j] = 0;
+                        else if (matrix[i, j] > 1) matrix[i, j]++;
+                    }
+                }
+
+                //finally, movePos becomes the new snake head and the former head (neck?) is incremented by 1
+                matrix[movePos.X, movePos.Y] = 1;
+                matrix[headPos.X, headPos.Y]++;
+
+                headPos = movePos;
+            }
+        }
+
+        
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NewGame();
