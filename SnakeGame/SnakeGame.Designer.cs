@@ -97,10 +97,10 @@
             // 
             this.lblGameOver.AutoSize = true;
             this.lblGameOver.BackColor = System.Drawing.Color.Transparent;
-            this.lblGameOver.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGameOver.Location = new System.Drawing.Point(156, 148);
+            this.lblGameOver.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGameOver.Location = new System.Drawing.Point(120, 148);
             this.lblGameOver.Name = "lblGameOver";
-            this.lblGameOver.Size = new System.Drawing.Size(0, 25);
+            this.lblGameOver.Size = new System.Drawing.Size(0, 37);
             this.lblGameOver.TabIndex = 5;
             this.lblGameOver.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -143,6 +143,7 @@
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // lblBonusFoodTimer
             // 
@@ -158,6 +159,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(626, 785);
             this.Controls.Add(this.lblBonusFoodTimer);
             this.Controls.Add(this.lblGameOver);
@@ -169,6 +171,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "SnakeGame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SnakeGame";
             this.Load += new System.EventHandler(this.SnakeGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SnakeGame_KeyDown);
