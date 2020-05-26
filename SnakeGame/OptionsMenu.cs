@@ -89,16 +89,19 @@ namespace SnakeGame
 
         private void btnSnakeColour1_Click(object sender, EventArgs e)
         {
+            SnakeGame.snakeColourNum = 1;
             lblSnakeColour.BackColor = Color.DarkOrange;
         }
 
         private void btnSnakeColour2_Click(object sender, EventArgs e)
         {
+            SnakeGame.snakeColourNum = 2;
             lblSnakeColour.BackColor = Color.Green;
         }
 
         private void btnSnakeColour3_Click(object sender, EventArgs e)
         {
+            SnakeGame.snakeColourNum = 3;
             lblSnakeColour.BackColor = Color.DarkCyan;
         }
 
