@@ -25,12 +25,18 @@ namespace SnakeGame
 
         Random random = new Random();
         public static Timer timer = new Timer();
-        public static Brush snakeCol = Brushes.DarkSlateBlue;
+        public static Brush snakeColour = Brushes.DarkSlateBlue;
 
         public static int speed { get; set; } = 5;
         public static int bonusFoodChance { get; set; } = 10;
-        public static int snakeColNum { get; set; } = 0;
+        public static int snakeColourNum { get; set; } = 0;
         public static bool barriers { get; set;} = true;
+
+        public static int bkgdSelect = 0;
+        List<List<Brush>> bkgds = new List<List<Brush>> {
+            new List<Brush> { Brushes.PaleGreen, Brushes.PaleTurquoise },
+            new List<Brush> { Brushes.MistyRose, Brushes.Lavender },
+            new List<Brush> { Brushes.SeaShell, Brushes.Beige } };
 
         int lastSegment;
         int[,] matrix;
@@ -43,7 +49,6 @@ namespace SnakeGame
         int bonusFoodTime = 0;
 
         public static bool roundSnake = false;
-
 
         private void NewGame()
         {
@@ -59,9 +64,8 @@ namespace SnakeGame
             lblScoreTotal.Text = score.ToString();
             lblGameOver.Visible = false;
             lblBonusFoodTimer.Visible = false;
-
             bonusFoodTime = 0;
-
+      
             GenerateFood(food);
 
             timer = new Timer();
@@ -69,7 +73,23 @@ namespace SnakeGame
             timer.Tick += timer_Tick;
             timer.Start();
 
+            ChooseSnakeColour(snakeColourNum);
+        }
 
+        private void ChooseSnakeColour(int colour)
+        {
+            switch (colour)
+            {
+                case 1:
+                    snakeColour = Brushes.DarkOrange;
+                    break;
+                case 2:
+                    snakeColour = Brushes.Green;
+                    break;
+                case 3:
+                    snakeColour = Brushes.DarkCyan;
+                    break;
+            }
         }
 
        
@@ -85,7 +105,7 @@ namespace SnakeGame
             Graphics gfx = Graphics.FromImage(bitmap);
             SizeF cellSize = new SizeF((float)pbGameBoard.Width / matSize, (float)pbGameBoard.Height / matSize);
 
-            gfx.FillRectangle(Brushes.PaleGreen, 0, 0, pbGameBoard.Width, pbGameBoard.Height);
+            gfx.FillRectangle(bkgds[bkgdSelect][0], 0, 0, pbGameBoard.Width, pbGameBoard.Height);
 
             for (int i = 0; i < matSize; i++)
             {
@@ -94,11 +114,11 @@ namespace SnakeGame
                     if (barriers)
                         if (i == 0 || j == 0 || i == matSize - 1 || j == matSize - 1) matrix[i, j] = 400;
 
-                    Brush cellColour = Brushes.PaleTurquoise;
+                    Brush cellColour = bkgds[bkgdSelect][1];
 
                     if (matrix[i, j] == 1) cellColour = Brushes.Black;
                     else if (matrix[i, j] > 399) cellColour = Brushes.DarkSlateGray;
-                    else if (matrix[i, j] > 1) cellColour = snakeCol;
+                    else if (matrix[i, j] > 1) cellColour = snakeColour;
                     else if (matrix[i, j] == food) cellColour = Brushes.Red;
                     else if (matrix[i, j] == bonusFood)
                     {
@@ -119,8 +139,7 @@ namespace SnakeGame
                     else gfx.FillRectangle(cellColour, i * cellSize.Width - 1, j * cellSize.Height - 1, cellSize.Width - 1, cellSize.Height - 1);
                 }
                 pbGameBoard.BackgroundImage = bitmap;
-            }
-            
+            }          
         }
 
         private void MoveSnake()
@@ -272,7 +291,6 @@ namespace SnakeGame
         {
             lblGameOver.Parent = pbGameBoard;
         }
-
         
     }
 }
