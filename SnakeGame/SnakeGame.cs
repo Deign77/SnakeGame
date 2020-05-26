@@ -107,7 +107,7 @@ namespace SnakeGame
                         {
                             cellColour = Brushes.Blue;
                             bonusFoodTime--;
-                            lblBonusFoodTimer.Text = bonusFoodTime.ToString() + "/nGet the bonus food!";
+                            lblBonusFoodTimer.Text = bonusFoodTime.ToString() + "\nGet the bonus food!";
                         }
                         else
                         {
@@ -206,9 +206,51 @@ namespace SnakeGame
             }
         }
 
+        private void SnakeGame_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                    if (snakeDirection != MoveDirection.Down)
+                        snakeDirection = MoveDirection.Up;
+                    break;
+                case Keys.Down:
+                    if (snakeDirection != MoveDirection.Up)
+                        snakeDirection = MoveDirection.Down;
+                    break;
+                case Keys.Left:
+                    if (snakeDirection != MoveDirection.Right)
+                        snakeDirection = MoveDirection.Left;
+                    break;
+                case Keys.Right:
+                    if (snakeDirection != MoveDirection.Left)
+                        snakeDirection = MoveDirection.Right;
+                    break;
+                case Keys.Enter:
+                    GameOver();
+                    NewGame();
+                    break;
+                case Keys.M:
+                    var m = new OptionsMenu();
+                    m.Show();
+                    break;
+            }
+        }
+
         private void GameOver()
         {
-            throw new NotImplementedException();
+            if (timer.Enabled) timer.Stop();
+            string hiScoreBeat = "";
+
+            if (score > hiScore)
+            {
+                hiScore = score;
+                lblHiScoreTotal.Text = score.ToString();
+                hiScoreBeat = "That's a new high score!";
+            }
+
+            lblGameOver.Text = "Game Over!\nYour final score is: " + score.ToString() + "\n" + hiScoreBeat + "\nPress \"Enter\" to play again";
+            lblGameOver.Visible = true;
         }
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -220,5 +262,18 @@ namespace SnakeGame
         {
             Close();
         }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var m = new OptionsMenu();
+            m.Show();
+        }
+
+        private void SnakeGame_Load(object sender, EventArgs e)
+        {
+            lblGameOver.Parent = pbGameBoard;
+        }
+
+        
     }
 }

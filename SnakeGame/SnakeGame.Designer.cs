@@ -96,12 +96,13 @@
             // lblGameOver
             // 
             this.lblGameOver.AutoSize = true;
+            this.lblGameOver.BackColor = System.Drawing.Color.Transparent;
             this.lblGameOver.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGameOver.Location = new System.Drawing.Point(262, 640);
+            this.lblGameOver.Location = new System.Drawing.Point(156, 148);
             this.lblGameOver.Name = "lblGameOver";
-            this.lblGameOver.Size = new System.Drawing.Size(50, 25);
+            this.lblGameOver.Size = new System.Drawing.Size(0, 25);
             this.lblGameOver.TabIndex = 5;
-            this.lblGameOver.Text = "G O";
+            this.lblGameOver.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // menuStrip1
             // 
@@ -147,7 +148,7 @@
             // 
             this.lblBonusFoodTimer.AutoSize = true;
             this.lblBonusFoodTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBonusFoodTimer.Location = new System.Drawing.Point(292, 699);
+            this.lblBonusFoodTimer.Location = new System.Drawing.Point(217, 658);
             this.lblBonusFoodTimer.Name = "lblBonusFoodTimer";
             this.lblBonusFoodTimer.Size = new System.Drawing.Size(20, 24);
             this.lblBonusFoodTimer.TabIndex = 7;
@@ -169,6 +170,8 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "SnakeGame";
             this.Text = "SnakeGame";
+            this.Load += new System.EventHandler(this.SnakeGame_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SnakeGame_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbGameBoard)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
