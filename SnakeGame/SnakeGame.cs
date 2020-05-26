@@ -69,7 +69,6 @@ namespace SnakeGame
             timer.Tick += timer_Tick;
             timer.Start();
 
-       
 
         }
 
