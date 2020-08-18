@@ -1,2 +1,2 @@
 # SnakeGame
-Classic snake game made with C#
+Classic snake game written as a Windows Forms App. 
